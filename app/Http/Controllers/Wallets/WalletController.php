@@ -11,7 +11,7 @@ use App\Models\Traits\Wallet\HasWallets;
 
 class WalletController extends Controller
 {
-    use HasWallets;
+    // use HasWallets;
    
     public function index()
     {
@@ -39,5 +39,10 @@ class WalletController extends Controller
         ];
         
         return response()->json($data, 200);
+    }
+
+    public function add()
+    {
+        //
     }
 }

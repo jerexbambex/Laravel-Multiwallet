@@ -44,8 +44,12 @@ trait HasWallets
     public function withdraw($wallet, $value)
     {
         $balance = $this->getWalletBalance($wallet);
-        
-        $attributes['balance'] = ($balance * 100) - ($value * 100);
+
+        if ($balance < $value) {
+            return false;
+        }
+       
+        $attributes['balance'] = ($balance - $value) * 100;
 
         return $this->getWallet($wallet)->update($attributes);
     }
