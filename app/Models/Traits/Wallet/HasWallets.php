@@ -26,7 +26,6 @@ trait HasWallets
     {
         $wallet = Wallet::make([
             'wallet_type_id' => $type,
-            'balance' => 230000,
         ]);
 
         return $this->wallets()->save($wallet);
