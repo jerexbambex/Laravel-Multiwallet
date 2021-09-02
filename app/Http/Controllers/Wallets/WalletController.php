@@ -24,7 +24,7 @@ class WalletController extends Controller
    
     public function index()
     {
-        $wallets = Wallet::with('user')->paginate();
+        $wallets = Wallet::with(['user'])->get();
 
         $data = [
             'status' => 'success',
@@ -36,7 +36,7 @@ class WalletController extends Controller
 
     public function show(Wallet $wallet)
     {
-        $wallet = Wallet::with('user')->find($wallet->id);
+        $wallet = Wallet::with('user', 'transactions')->find($wallet->id);
 
         $data = [
             'status' => 'success',

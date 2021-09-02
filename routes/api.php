@@ -17,9 +17,10 @@ Route::prefix('/v1')->group(function(){
 
     // User Wallet 
     Route::prefix('/user/wallets')->middleware('auth:api')->group(function () {
-        Route::get('/', [UserWalletController::class, 'show']);
+        Route::get('/', [UserWalletController::class, 'index']);
         Route::post('/create', [UserWalletController::class, 'store']);
         Route::post('/sendmoney/{wallet}', [UserWalletController::class, 'sendMoney']);
+        Route::post('/addmoney/{wallet}', [UserWalletController::class, 'addMoney']);
     });
 
 

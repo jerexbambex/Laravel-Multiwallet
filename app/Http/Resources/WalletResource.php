@@ -21,6 +21,7 @@ class WalletResource extends JsonResource
             'relationship' => [
                 'wallet_type' => new WalletTypeResource($this->walletType),
                 'owner' => new UserResource(($this->whenLoaded('user'))),
+                'transactions' => TransactionResource::collection($this->whenLoaded('transactions')),
             ],
         ];
     }

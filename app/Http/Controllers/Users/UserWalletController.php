@@ -22,6 +22,18 @@ class UserWalletController extends Controller
         return response()->json($data, 200);
     }
 
+    public function show(Wallet $wallet)
+    {
+        // $wallet = Wallet::with('user', 'transactions')->find($wallet->id);
+
+        $data = [
+            'status' => 'success',
+            'data' => new WalletResource($wallet),
+        ];
+        
+        return response()->json($data, 200);
+    }
+
     public function store(Request $request)
     {
         $request->validate(['wallet_type_id' => 'required|exists:wallet_types,id']);
@@ -66,20 +78,21 @@ class UserWalletController extends Controller
         return response()->json($data, 200);
     }
 
-    public function addMoney(Request $request)
+    public function addMoney(Request $request, Wallet $wallet)
     {
         $request->validate([
             'amount' => ['required', 'numeric'],
-            'wallet_id' => ['required'],
+            // 'wallet_id' => ['required'],
         ]);
 
-        $request->user()->deposit($request->wallet_id, $request->amount);
+        $request->user()->deposit($wallet->id, $request->amount);
+        
         $transaction = Transaction::make([
-            'wallet_id' => $request->wallet_id,
+            'wallet_id' => $wallet->id,
             'description' => "You added {$request->amount} to your wallet"
         ]);
 
-        $wallet = $request->user()->getWallet($request->wallet_id);
+        $wallet = $request->user()->getWallet($wallet->id);
 
         $data = [
             'status' => 'success',
