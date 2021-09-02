@@ -82,11 +82,10 @@ class UserWalletController extends Controller
     {
         $request->validate([
             'amount' => ['required', 'numeric'],
-            // 'wallet_id' => ['required'],
         ]);
 
         $request->user()->deposit($wallet->id, $request->amount);
-        
+
         $transaction = Transaction::make([
             'wallet_id' => $wallet->id,
             'description' => "You added {$request->amount} to your wallet"

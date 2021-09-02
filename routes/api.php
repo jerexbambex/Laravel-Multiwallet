@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Users\UsersController;
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\Wallets\WalletController;
 use App\Http\Controllers\Users\UserWalletController;
 
@@ -25,6 +26,7 @@ Route::prefix('/v1')->group(function(){
 
 
     // Excel Imports
+    Route::get('lgastates', [ImportController::class, 'index']);
 
 });
 
