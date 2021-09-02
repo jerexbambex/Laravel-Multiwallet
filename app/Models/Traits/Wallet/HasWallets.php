@@ -22,6 +22,11 @@ trait HasWallets
         return $this->getWallet($id)->balance;
     }
 
+    public function getMyWallet()
+    {
+        // return
+    }
+
     public function createWallet($type)
     {
         $wallet = Wallet::make([
@@ -51,5 +56,14 @@ trait HasWallets
         $attributes['balance'] = ($balance - $value) * 100;
 
         return $this->getWallet($wallet)->update($attributes);
+        // return true;
+    }
+
+    public function transfer($wallet, $receiver, $amount)
+    {
+        $this->withdraw($wallet, $amount);
+        $this->deposit($receiver, $amount);
+
+        return true;
     }
 }

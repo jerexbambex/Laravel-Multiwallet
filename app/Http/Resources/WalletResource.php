@@ -20,6 +20,7 @@ class WalletResource extends JsonResource
             'balance' => $this->balance,
             'relationship' => [
                 'wallet_type' => new WalletTypeResource($this->walletType),
+                'owner' => new UserResource(($this->whenLoaded('user'))),
             ],
         ];
     }

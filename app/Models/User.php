@@ -29,6 +29,11 @@ class User extends Authenticatable
         return $this->hasMany(Wallet::class);
     }
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

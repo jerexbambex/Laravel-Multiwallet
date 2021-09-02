@@ -3,35 +3,40 @@
 namespace App\Http\Controllers\Wallets;
 
 use App\Models\User;
+use App\Models\Wallet;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\WalletResource;
 use App\Models\Traits\Wallet\HasWallets;
 
 class WalletController extends Controller
 {
     // use HasWallets;
+    public $user;
+
+    public function __construct()
+    {
+        //
+    }
    
     public function index()
     {
-        $wallet = request()->user()->getWallets();
+        $wallets = Wallet::with('user')->paginate();
 
         $data = [
             'status' => 'success',
-            'data' => WalletResource::collection($wallet),
+            'data' => WalletResource::collection($wallets),
         ];
         
         return response()->json($data, 200);
     }
 
-    public function store(Request $request)
+    public function show(Wallet $wallet)
     {
-        $request->validate(['wallet_type_id' => 'required|exists:wallet_types,id']);
-
-        $walletType = $request->wallet_type_id;
-
-        $wallet = $request->user()->createWallet($walletType);
+        $wallet = Wallet::with('user')->find($wallet->id);
 
         $data = [
             'status' => 'success',
@@ -41,8 +46,4 @@ class WalletController extends Controller
         return response()->json($data, 200);
     }
 
-    public function add()
-    {
-        //
-    }
 }

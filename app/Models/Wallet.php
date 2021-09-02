@@ -10,16 +10,22 @@ class Wallet extends Model
     use HasFactory;
 
     protected $guarded = [];
-
+    
+    public function getBalanceAttribute($value)
+    {
+        return $value / 100;
+    }
+    
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getBalanceAttribute($value)
+    public function transactions()
     {
-        return $value / 100;
+        return $this->hasMany(Transaction::class);
     }
+
 
     public function walletType()
     {

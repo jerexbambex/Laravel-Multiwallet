@@ -17,8 +17,9 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'email' => $this->email,
             'relationship' => [
-                'wallet' => WalletResource::collection($this->wallets)
+                'wallet' => WalletResource::collection($this->whenLoaded('wallets'))
             ],
         ];
     }
